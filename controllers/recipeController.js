@@ -2,8 +2,13 @@ const Recipe = require("../model/recipe");
 // const jwt = require("jsonwebtoken");
 
 // get a recipe detail
-exports.list = function (req, res) {
-  res.send("NOT IMPLEMENTED: Recipe list");
+exports.list = async function (req, res) {
+  try {
+    const recipes = await Recipe.find({}).limit(20);
+    return res.status(200).json(recipes);
+  } catch (error) {
+    return res.status(401).json(error);
+  }
 };
 
 // get a recipe detail
@@ -12,9 +17,9 @@ exports.detail = async function (req, res) {
     const _id = req.body;
     const recipe = await Recipe.findOne({ _id });
     console.log(recipe);
-    res.status(200).json(recipe);
+    return res.status(200).json(recipe);
   } catch (error) {
-    res.status(401).json(error);
+    return res.status(401).json(error);
   }
 };
 
@@ -34,7 +39,7 @@ exports.create = async function (req, res) {
     });
 
     recipe.save();
-    res.status(201).json(recipe);
+    return res.status(201).json(recipe);
   } catch (error) {
     console.log(error);
   }

@@ -4,7 +4,7 @@ const auth = require("../middleware/auth");
 
 var recipe_controller = require("../controllers/recipeController");
 
-router.get("/", auth, recipe_controller.list);
+router.get("/", recipe_controller.list);
 
 router.get("/detail", recipe_controller.detail);
 
