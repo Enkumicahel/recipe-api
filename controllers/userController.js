@@ -1,4 +1,5 @@
 const User = require("../model/user");
+const Recipe = require("../model/recipe");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { where } = require("../model/user");
@@ -15,8 +16,15 @@ exports.index = function (req, res) {
 };
 
 // list users - Super Admin
-exports.list = function (req, res) {
-  res.status(200).send("NOT IMPLEMENTED: Users list");
+exports.list = async function (req, res) {
+  const user = await User.find({})
+    .populate({
+      path: "_recipes",
+      model: Recipe,
+    })
+    .limit(20)
+    .exec();
+  return res.status(200).json(user);
 };
 
 // User registration

@@ -15,6 +15,6 @@ router.post("/create", auth, recipe_controller.create);
 router.post("/update", auth, recipe_controller.update);
 
 // POST request for login
-router.post("/delete", recipe_controller.delete);
+router.get("/delete/:_id", auth, recipe_controller.delete);
 
 module.exports = router;
